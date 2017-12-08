@@ -5,51 +5,39 @@ import (
 	"fmt"
 )
 type TestObj struct {
-	field1 string `TA`
-	field2 []string `db:"nihao"`
-	field3 int	  `db:65`
-}
-type TestObj2 struct {
-	ss string `TA`
-	g []string `db:"nihao"`
-	wg string `TA`
-	qw int	  `db:65`
-	l []string `db:"nihao"`
-	fh int	  `db:65`
+	field1 string
+	field2 []string
+	field3 int
+	field4 []int	`alias:"f4"`
+	field5 byte 	`alias:"f5"`
+	field6 []byte	`alias:"f6"`
 }
 func (t *TestObj)T()  {
 	fmt.Println("fuck!")
 }
 func main(){
-	//sss:=TestObj{
-	//	field1:"abcdefghijklmnopyq",
-	//	field2:[]string{"a"},
-	//	field3:3,
-	//}
-	//vvv:=TestObj{
-	//	field1:"abcdlmnopyq",
-	//	field2:[]string{"ass"},
-	//	field3:4553,
-	//}
-	//fmt.Println(*(*int)(unsafe.Pointer(uintptr(unsafe.Pointer(&sss))+unsafe.Offsetof(vvv.field3))))
-	//fmt.Println(unsafe.Pointer(&vvv))
-
 	a:=&optreflect.OptReflect{}
-	//s:="xsss"
-	//_,err:=a.Get(&TestObj{},"xxx")
-	//if err!=nil{
-	//	fmt.Println(err.Error())
-	//}
-	//err=a.Set("xxxxxx","kiy","xxx")
-	//if err!=nil{
-	//	fmt.Println(err.Error())
-	//}
 	a.Init(&TestObj{})
-	//err:=a.Set(&aa,"kiy","xxx")
-	//if err!=nil{
-	//	fmt.Println(err.Error())
-	//}
-	ooo:=TestObj{field1:"abcdesklmnopyq",field2:[]string{"a","b","c"}, field3:4523}
+	ooo:=TestObj{
+		field1:"test string",
+		field2:[]string{"a","b","c"},
+		field3:4523,
+		field4:[]int{1,2,3,5},
+		field5:byte(4),
+		field6:[]byte{2,2,2},
+		}
+	err:=a.Set(&ooo,"field1","change test string to test this sentence!")
+	if err!=nil{
+		fmt.Println(err)
+	}
+	err=a.Set(&ooo,"field1",0)
+	if err!=nil{
+		fmt.Println(err)
+	}
+	err=a.Set(&ooo,"field1",0)
+	if err!=nil{
+		fmt.Println(err)
+	}
 	v,err:=a.Get(&ooo,"field1")
 	if err==nil{
 		fmt.Println(v)
@@ -59,6 +47,18 @@ func main(){
 		fmt.Println(v)
 	}
 	v,err=a.Get(&ooo,"field2")
+	if err==nil{
+		fmt.Println(v)
+	}
+	v,err=a.Get(&ooo,"field4")
+	if err==nil{
+		fmt.Println(v)
+	}
+	v,err=a.Get(&ooo,"f5")
+	if err==nil{
+		fmt.Println(v)
+	}
+	v,err=a.Get(&ooo,"f6")
 	if err==nil{
 		fmt.Println(v)
 	}
